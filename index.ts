@@ -4,36 +4,12 @@
 // npm i @types/inquirer -D
 // npm i @types/node -D
 import inquirer from "inquirer";
-
-function generateUserId(): string {
-  return "user" + Math.floor(Math.random() * 10);
-}
-
-function generateUserPin(): string {
-  return Math.floor(1000 + Math.random() * 9000).toString();
-}
-
-function generateAccountBalance(): number {
-  return Math.floor(10000 + Math.random() * 9000);
-}
-const userDetails = {
-  userId: generateUserId(),
-  userPin: generateUserPin(),
-  balance: generateAccountBalance(),
-};
-console.log("userDetails :>> ", userDetails);
-
-function validateUser(input: string): boolean {
-  return userDetails?.userId === input;
-}
-function validatePin(input: string): boolean {
-  return userDetails?.userPin === input;
-}
-function validateAmount(input: string): boolean {
-  return (
-    Number(input) >= 500 && Number(input) <= 25000 && Number(input) % 500 === 0
-  );
-}
+import {
+  userDetails,
+  validateAmount,
+  validatePin,
+  validateUser,
+} from "./functions.js";
 
 async function main() {
   // Interactive menu
@@ -103,22 +79,9 @@ inquirer
         }
       },
     },
-    // {
-    //   name: "amount",
-    //   message: "Please enter amount to withdraw: ",
-    //   type: "input",
-    //   validate: function (input) {
-    //     if (validateAmount(input)) {
-    //       return true;
-    //     } else {
-    //       return "Please enter amount between 500-25000";
-    //     }
-    //   },
-    // },
   ])
   .then((answers) => {
     main().catch(console.error);
-    // console.log(`${answers?.amount} withdrawn successfully!`);
   })
   .catch((error) => {
     if (error.isTtyError) {
